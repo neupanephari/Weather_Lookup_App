@@ -5,20 +5,20 @@
     
     if ($_GET['city']) {
 		$urlContents = 
-		file_get_contents("http://api.openweathermap.org/data/2.5/weather?q=".$GET['city']."$appid=e16d80cca5bf91ab3aa694a2c88838d3");
+		file_get_contents("http://api.openweathermap.org/data/2.5/weather?q=".urlencode($_GET['city'])."&appid=Your api");
 		
 		$weatherArray = json_decode($urlContents, true);
 		
-		print_r($weatherArray);
+		//print_r($weatherArray);
 		
 		if ($weatherArray['cod'] == 200){
-			$weather = "The Weather in ".$_GET['city']." is currently 
-		'".$weatherArray['weather'][0]['description']."'.";
+			$weather = "The Weather in ".$_GET['city']." is currently
+		'".$weatherArray['weather'][0]['description']."'. ";
 		
 		$tempInCelcius = intval($weatherArray['main']['temp'] - 273);
 		
-		$weather = "The temperature is ".$tempInCelcius."&deg;C and the 
-		wind speed is ".$weatherArray['wind']['speed'].".";
+		$weather .= "The temperature is ".$tempInCelcius."&deg;C and the 
+		wind speed is ".$weatherArray['wind']['speed'].". ";
         
 		} else{
 			$error = "Could not find city-Please Try again Later.";
